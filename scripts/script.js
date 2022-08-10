@@ -9,7 +9,11 @@ const markusGiant = new Book("Markus Giant", "Bogdan Aiuriios", "1442", "read");
 
 const goGame = new Book("Go Game", "Iuriona Jixiun", "44", "read");
 
-let myLibrary = [theHobbit, markusGiant, goGame];
+const goGame2 = new Book("Go Game 2", "Iuriona Jixiun", "44", "read");
+
+const goGame3 = new Book("Go Game 3", "Iuriona Jixiun", "44", "read");
+
+let myLibrary = [theHobbit, markusGiant, goGame, goGame2, goGame3];
 
 function Book(title, author, pages, read) {
   this.title = title;
@@ -36,8 +40,31 @@ function displayBooks() {
 
   myLibrary.forEach((book) => {
     const placedBook = document.createElement("div");
+
+    const placedBookTitle = document.createElement("div");
+    placedBookTitle.className = "title";
+    placedBookTitle.textContent = `${book.title}`;
+
+    const placedBookAuthor = document.createElement("div");
+    placedBookAuthor.className = "author";
+    placedBookAuthor.textContent = `Author: ${book.author}`;
+
+    const placedBookPages = document.createElement("div");
+    placedBookPages.className = "pages";
+    placedBookPages.textContent = `Pages: ${book.pages}`;
+
+    const placedBookRead = document.createElement("div");
+    placedBookRead.className = "read-status";
+    placedBookRead.textContent = `${book.read}`;
+
     placedBook.className = "book";
     placedBook.id = book.title;
+    placedBook.appendChild(placedBookTitle);
+    placedBook.appendChild(placedBookAuthor);
+    placedBook.appendChild(placedBookPages);
+    placedBook.appendChild(placedBookRead);
     libraryContainer.appendChild(placedBook);
   });
 }
+
+displayBooks();

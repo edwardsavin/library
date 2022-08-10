@@ -62,3 +62,18 @@ svg {
     scroll-behavior: auto !important;
   }
 }
+
+.wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.library-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  justify-items: center;
+}
+
+.book {
+  padding: 1rem;
+}
