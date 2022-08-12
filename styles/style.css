@@ -71,9 +71,15 @@ svg {
 .library-container {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  justify-items: center;
+  justify-items: start;
 }
 
 .book {
+  display: flex;
+  flex-direction: column;
   padding: 1rem;
+}
+
+.title {
+  align-self: center;
 }
