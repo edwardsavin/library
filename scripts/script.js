@@ -117,7 +117,6 @@ function startBookForm() {
   });
 }
 
-// TODO: don't add to library if same exact book already exists
 // Push the book into myLibrary
 function addBookToLibrary(title, author, pages, read) {
   let newBook = new Book(`${title}`, `${author}`, `${pages}`, `${read}`);
@@ -208,11 +207,11 @@ function updateBookLocation() {
 // Check if book already exists in myLibrary
 function checkDuplicate(title, author) {
   let checkTitle = myLibrary.some(function (book) {
-    return book.title === title;
+    return book.title === title.toLowerCase();
   });
 
   let checkAuthor = myLibrary.some(function (book) {
-    return book.author === author;
+    return book.author === author.toLowerCase();
   });
 
   if (checkTitle && checkAuthor) {
