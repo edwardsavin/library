@@ -149,9 +149,13 @@ function displayBooks() {
       placedBookPages.className = "pages";
       placedBookPages.textContent = `Pages: ${book.pages}`;
 
-      const placedBookRead = document.createElement("div");
-      placedBookRead.className = "read-status";
-      placedBookRead.textContent = `${book.read}`;
+      const placedBookRead = document.createElement("button");
+      placedBookRead.setAttribute("type", "button");
+      if (book.read === "read") {
+        placedBookRead.className = "read-status read";
+      } else {
+        placedBookRead.className = "read-status not-read";
+      }
 
       const removeButton = document.createElement("button");
       removeButton.textContent = "REMOVE";
@@ -169,6 +173,7 @@ function displayBooks() {
     }
   });
   findRemoveButtonLocation();
+  findReadButtonLocation();
 }
 
 function findRemoveButtonLocation() {
@@ -190,6 +195,30 @@ function removeBook(arrayLocation) {
   bookElement.parentNode.removeChild(bookElement);
 
   updateBookLocation();
+}
+
+function findReadButtonLocation() {
+  // Send book location from myLibrary to changeReadStatus() if read button is clicked
+  document.onclick = (e) => {
+    if (e.target.className.includes("read-status")) {
+      changeReadStatus(e.target.parentNode.dataset.location);
+    }
+  };
+}
+
+function changeReadStatus(arrayLocation) {
+  const bookLocationFormatted =
+    "[data-location=" + "'" + arrayLocation + "'" + "]";
+  const bookElement = document.querySelector(bookLocationFormatted);
+  const bookReadButton = bookElement.querySelector(".read-status");
+
+  if (bookReadButton.classList.contains("read")) {
+    bookReadButton.className = "read-status not-read";
+    myLibrary[arrayLocation].read = "not read yet";
+  } else {
+    bookReadButton.className = "read-status read";
+    myLibrary[arrayLocation].read = "read";
+  }
 }
 
 // Update data-location of all books

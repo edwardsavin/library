@@ -84,3 +84,11 @@ svg {
 .title {
   align-self: center;
 }
+
+.read::after {
+  content: "read";
+}
+
+.not-read::after {
+  content: "not read yet";
+}
