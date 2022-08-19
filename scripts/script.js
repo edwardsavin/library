@@ -172,15 +172,18 @@ function displayBooks() {
       libraryContainer.appendChild(placedBook);
     }
   });
-  findRemoveButtonLocation();
-  findReadButtonLocation();
+  findButtons();
 }
 
-function findRemoveButtonLocation() {
+// Check if any button inside HTML book element is clicked
+function findButtons() {
   // Send book location from myLibrary to removeBook() if remove button is clicked
   document.onclick = (e) => {
     if (e.target.className.includes("book-remove")) {
       removeBook(e.target.parentNode.dataset.location);
+      // Send book location from myLibrary to changeReadStatus() if read button is clicked
+    } else if (e.target.className.includes("read-status")) {
+      changeReadStatus(e.target.parentNode.dataset.location);
     }
   };
 }
@@ -195,15 +198,6 @@ function removeBook(arrayLocation) {
   bookElement.parentNode.removeChild(bookElement);
 
   updateBookLocation();
-}
-
-function findReadButtonLocation() {
-  // Send book location from myLibrary to changeReadStatus() if read button is clicked
-  document.onclick = (e) => {
-    if (e.target.className.includes("read-status")) {
-      changeReadStatus(e.target.parentNode.dataset.location);
-    }
-  };
 }
 
 function changeReadStatus(arrayLocation) {
