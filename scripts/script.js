@@ -20,11 +20,9 @@ function Book(title, author, pages, read) {
   this.author = author;
   this.pages = pages;
   this.read = read;
-  this.info = function () {
-    return `${title} by ${author}, ${pages} pages, ${read}`;
-  };
 }
 
+// TODO: make it a modal
 // Dynamically create a form and ask user for info about the book
 function startBookForm() {
   const bookForm = document.createElement("form");
@@ -90,7 +88,7 @@ function startBookForm() {
   submitButton.setAttribute("type", "button");
   submitButton.setAttribute("form", "book-form");
   submitButton.setAttribute("value", "Submit");
-  submitButton.className = "book-submit";
+  submitButton.className = "button";
   submitButton.id = "book-submit";
 
   bookForm.appendChild(submitButton);
@@ -106,16 +104,20 @@ function startBookForm() {
       bookRead.value = "not read yet";
     }
 
-    addBookToLibrary(
-      bookTitle.value,
-      bookAuthor.value,
-      bookPages.value,
-      bookRead.value
-    );
+    if (!checkDuplicate(bookTitle.value, bookAuthor.value)) {
+      addBookToLibrary(
+        bookTitle.value,
+        bookAuthor.value,
+        bookPages.value,
+        bookRead.value
+      );
+    }
+
     libraryContainer.removeChild(bookForm);
   });
 }
 
+// TODO: don't add to library if same exact book already exists
 // Push the book into myLibrary
 function addBookToLibrary(title, author, pages, read) {
   let newBook = new Book(`${title}`, `${author}`, `${pages}`, `${read}`);
@@ -130,8 +132,11 @@ function displayBooks() {
   myLibrary.forEach((book) => {
     // Check if the book already exists in the HTML
     // If it doesn't exist, add it
-    if (!document.getElementById(book.title)) {
+    if (!document.getElementById(`${book.title} by ${book.author}`)) {
       const placedBook = document.createElement("div");
+
+      const placedBookLocation = myLibrary.indexOf(book);
+      placedBook.dataset.location = placedBookLocation;
 
       const placedBookTitle = document.createElement("div");
       placedBookTitle.className = "title";
@@ -149,15 +154,72 @@ function displayBooks() {
       placedBookRead.className = "read-status";
       placedBookRead.textContent = `${book.read}`;
 
+      const removeButton = document.createElement("button");
+      removeButton.textContent = "REMOVE";
+      removeButton.setAttribute("type", "button");
+      removeButton.className = "button book-remove";
+
       placedBook.className = "book";
-      placedBook.id = book.title;
+      placedBook.id = `${book.title} by ${book.author}`;
       placedBook.appendChild(placedBookTitle);
       placedBook.appendChild(placedBookAuthor);
       placedBook.appendChild(placedBookPages);
       placedBook.appendChild(placedBookRead);
+      placedBook.appendChild(removeButton);
       libraryContainer.appendChild(placedBook);
     }
   });
+  findRemoveButtonLocation();
+}
+
+function findRemoveButtonLocation() {
+  // Send book location from myLibrary to removeBook() if remove button is clicked
+  document.onclick = (e) => {
+    if (e.target.className.includes("book-remove")) {
+      removeBook(e.target.parentNode.dataset.location);
+    }
+  };
+}
+
+// Remove book from library and from HTML
+function removeBook(arrayLocation) {
+  const bookLocationFormatted =
+    "[data-location=" + "'" + arrayLocation + "'" + "]";
+  const bookElement = document.querySelector(bookLocationFormatted);
+
+  myLibrary.splice(arrayLocation, 1);
+  bookElement.parentNode.removeChild(bookElement);
+
+  updateBookLocation();
+}
+
+// Update data-location of all books
+function updateBookLocation() {
+  myLibrary.forEach((book) => {
+    const placedBook = document.getElementById(
+      `${book.title} by ${book.author}`
+    );
+    const placedBookLocation = myLibrary.indexOf(book);
+
+    placedBook.dataset.location = placedBookLocation;
+  });
+}
+
+// Check if book already exists in myLibrary
+function checkDuplicate(title, author) {
+  let checkTitle = myLibrary.some(function (book) {
+    return book.title === title;
+  });
+
+  let checkAuthor = myLibrary.some(function (book) {
+    return book.author === author;
+  });
+
+  if (checkTitle && checkAuthor) {
+    return true;
+  } else {
+    return false;
+  }
 }
 
 displayBooks();
