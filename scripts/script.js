@@ -119,9 +119,11 @@ function startBookForm() {
 
 // Push the book into myLibrary
 function addBookToLibrary(title, author, pages, read) {
-  let newBook = new Book(`${title}`, `${author}`, `${pages}`, `${read}`);
-  myLibrary.push(newBook);
-  displayBooks();
+  if (title !== "" && author !== "") {
+    let newBook = new Book(`${title}`, `${author}`, `${pages}`, `${read}`);
+    myLibrary.push(newBook);
+    displayBooks();
+  }
 }
 
 // Display book information in the HTML
@@ -227,14 +229,15 @@ function updateBookLocation() {
   });
 }
 
+// TODO: compare with myLibrary being lowercased too
 // Check if book already exists in myLibrary
 function checkDuplicate(title, author) {
   let checkTitle = myLibrary.some(function (book) {
-    return book.title === title.toLowerCase();
+    return book.title.toLowerCase() === title.toLowerCase();
   });
 
   let checkAuthor = myLibrary.some(function (book) {
-    return book.author === author.toLowerCase();
+    return book.author.toLowerCase() === author.toLowerCase();
   });
 
   if (checkTitle && checkAuthor) {
