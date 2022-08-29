@@ -1,3 +1,33 @@
+:root {
+  --clr-primary-400: hsl(210, 11%, 15%);
+
+  --clr-neutral-100: hsl(210, 17%, 98%);
+  --clr-neutral-400: hsl(210, 17%, 93%);
+
+  --clr-accent-400: hsl(210, 10%, 23%);
+  --clr-accent-700: hsl(180, 75%, 28%);
+
+  --ff-primary: "Space Grotesk", -apple-system, BlinkMacSystemFont, avenir next,
+    avenir, segoe ui, helvetica neue, helvetica, Cantarell, Ubuntu, roboto, noto,
+    arial, sans-serif;
+
+  --ff-body: var(--ff-primary);
+  --ff-heading: var(--ff-primary);
+
+  --fw-light: 300;
+  --fw-regular: 400;
+  --fw-bold: 700;
+
+  --fs-200: 0.5rem;
+  --fs-300: 0.75rem;
+  --fs-350: 0.875rem;
+  --fs-400: 1rem;
+  --fs-500: 1.25rem;
+  --fs-600: 1.5rem;
+  --fs-700: 1.75rem;
+  --fs-800: 2rem;
+}
+
 /* Box sizing rules */
 *,
 *::before,
@@ -10,6 +40,7 @@
   margin: 0;
   padding: 0;
   font: inherit;
+  font-family: var(--ff-body);
 }
 
 /* Remove list styles on ul, ol elements with a list role, which suggests default styling will be removed */
@@ -32,6 +63,8 @@ body {
 body {
   text-rendering: optimizeSpeed;
   line-height: 1.5;
+  background-color: var(--clr-neutral-100);
+  padding: 2rem;
 }
 
 /* A elements that don't have a class get default styles */
@@ -72,23 +105,176 @@ svg {
 .library-container {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  justify-items: start;
+  justify-items: center;
+  gap: 2rem;
+  margin-top: 2rem;
 }
 
 .book {
   display: flex;
   flex-direction: column;
   padding: 1rem;
+  height: 15rem;
+  background-color: var(--clr-neutral-400);
+  gap: 0.6rem;
+  border: solid 0.1rem hsla(210, 10%, 23%, 0.507);
+  color: var(--clr-primary-400);
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px,
+    rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
+  border-radius: 1px;
 }
 
 .title {
   align-self: center;
 }
 
-.read::after {
-  content: "read";
+.read-status {
+  margin-top: 3rem;
 }
 
-.not-read::after {
-  content: "not read yet";
+/* New book button */
+#book-new {
+  font-size: 16px;
+  letter-spacing: 2px;
+  text-decoration: none;
+  text-transform: uppercase;
+  color: var(--clr-accent-400);
+  cursor: pointer;
+  border: 3px solid;
+  padding: 0.25em 0.5em;
+  box-shadow: 1px 1px 0px 0px, 2px 2px 0px 0px, 3px 3px 0px 0px, 4px 4px 0px 0px,
+    5px 5px 0px 0px;
+  position: relative;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  background-color: var(--clr-neutral-400);
+}
+
+#book-new:active {
+  box-shadow: 0px 0px 0px 0px;
+  top: 5px;
+  left: 5px;
+}
+
+@media (min-width: 768px) {
+  #book-new {
+    padding: 0.25em 0.75em;
+  }
+}
+
+/* Read status button */
+/* The switch - the box around the slider */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: hsla(210, 10%, 23%, 0.486);
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: var(--clr-neutral-400);
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+input:checked + .slider {
+  background-color: var(--clr-accent-700);
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px var(--clr-accent-700);
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Remove button */
+.book-remove {
+  width: 150px;
+  height: 50px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  border: none;
+  border-radius: 1px;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.15);
+  background: var(--clr-neutral-100);
+}
+
+.book-remove,
+.book-remove span {
+  transition: 200ms;
+}
+
+.book-remove .text {
+  transform: translateX(35px);
+  color: var(--clr-accent-400);
+  font-weight: var(--fw-bold);
+}
+
+.book-remove .icon {
+  position: absolute;
+  transform: translateX(110px);
+  height: 20px;
+  width: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.book-remove svg {
+  width: 15px;
+  fill: var(--clr-neutral-400);
+}
+
+.book-remove:hover {
+  background: var(--clr-accent-400);
+}
+
+.book-remove:hover .text {
+  color: transparent;
+}
+
+.book-remove:hover .icon {
+  width: 150px;
+  border-left: none;
+  transform: translateX(0);
+}
+
+.book-remove:focus {
+  outline: none;
+}
+
+.book-remove:active .icon svg {
+  transform: scale(0.8);
 }

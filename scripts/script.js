@@ -151,25 +151,67 @@ function displayBooks() {
       placedBookPages.className = "pages";
       placedBookPages.textContent = `Pages: ${book.pages}`;
 
-      const placedBookRead = document.createElement("button");
-      placedBookRead.setAttribute("type", "button");
+      const placedBookReadStatus = document.createElement("div");
+      placedBookReadStatus.textContent = "Read status:";
+
+      const placedBookSwitch = document.createElement("label");
+      placedBookSwitch.className = "switch";
+
+      const placedBookRead = placedBookSwitch.appendChild(
+        document.createElement("input")
+      );
+      placedBookRead.setAttribute("type", "checkbox");
       if (book.read === "read") {
         placedBookRead.className = "read-status read";
+        placedBookRead.checked = true;
       } else {
         placedBookRead.className = "read-status not-read";
       }
 
+      const placedBookSlider = placedBookSwitch.appendChild(
+        document.createElement("span")
+      );
+      placedBookSlider.className = "slider";
+
       const removeButton = document.createElement("button");
-      removeButton.textContent = "REMOVE";
       removeButton.setAttribute("type", "button");
       removeButton.className = "button book-remove";
+
+      const removeButtonText = removeButton.appendChild(
+        document.createElement("span")
+      );
+      removeButtonText.textContent = "REMOVE";
+      removeButtonText.className = "text";
+
+      const removeButtonIcon = removeButton.appendChild(
+        document.createElement("span")
+      );
+      removeButtonIcon.className = "icon";
+
+      const removeButtonIconSvg = removeButtonIcon.appendChild(
+        document.createElementNS("http://www.w3.org/2000/svg", "svg")
+      );
+      removeButtonIconSvg.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+      removeButtonIconSvg.setAttribute("width", "24");
+      removeButtonIconSvg.setAttribute("height", "24");
+      removeButtonIconSvg.setAttribute("viewBox", "0 0 24 24");
+
+      const removeButtonIconSvgPath = removeButtonIconSvg.appendChild(
+        document.createElementNS("http://www.w3.org/2000/svg", "path")
+      );
+      removeButtonIconSvgPath.setAttributeNS(
+        null,
+        "d",
+        "M24 20.188l-8.315-8.209 8.2-8.282-3.697-3.697-8.212 8.318-8.31-8.203-3.666 3.666 8.321 8.24-8.206 8.313 3.666 3.666 8.237-8.318 8.285 8.203z"
+      );
 
       placedBook.className = "book";
       placedBook.id = `${book.title} by ${book.author}`;
       placedBook.appendChild(placedBookTitle);
       placedBook.appendChild(placedBookAuthor);
       placedBook.appendChild(placedBookPages);
-      placedBook.appendChild(placedBookRead);
+      placedBook.appendChild(placedBookReadStatus);
+      placedBook.appendChild(placedBookSwitch);
       placedBook.appendChild(removeButton);
       libraryContainer.appendChild(placedBook);
     }
@@ -177,15 +219,16 @@ function displayBooks() {
   findButtons();
 }
 
+// TODO: solve bug: not removing the book when clicking exactly on it "X" icon
 // Check if any button inside HTML book element is clicked
 function findButtons() {
   // Send book location from myLibrary to removeBook() if remove button is clicked
   document.onclick = (e) => {
-    if (e.target.className.includes("book-remove")) {
-      removeBook(e.target.parentNode.dataset.location);
+    if (e.target.parentNode.className.includes("book-remove")) {
+      removeBook(e.target.parentNode.parentNode.dataset.location);
       // Send book location from myLibrary to changeReadStatus() if read button is clicked
     } else if (e.target.className.includes("read-status")) {
-      changeReadStatus(e.target.parentNode.dataset.location);
+      changeReadStatus(e.target.parentNode.parentNode.dataset.location);
     }
   };
 }
@@ -229,7 +272,6 @@ function updateBookLocation() {
   });
 }
 
-// TODO: compare with myLibrary being lowercased too
 // Check if book already exists in myLibrary
 function checkDuplicate(title, author) {
   let checkTitle = myLibrary.some(function (book) {
