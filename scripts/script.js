@@ -15,6 +15,29 @@ const goGame3 = new Book("Go Game 3", "Iuriona Jixiun", "44", "read");
 
 let myLibrary = [theHobbit, markusGiant, goGame, goGame2, goGame3];
 
+// Modal
+const modal = document.querySelector(".modal");
+const trigger = document.querySelector(".modal-trigger");
+const closeButton = document.querySelector(".modal-close");
+const modalContent = document.querySelector(".modal-content");
+
+function toggleModal() {
+  modal.classList.toggle("modal-show");
+}
+
+function windowOnClick(event) {
+  if (event.target === modal) {
+    modalContent.removeChild(modalContent.lastChild);
+    toggleModal();
+  } else if (event.target === closeButton) {
+    modalContent.removeChild(modalContent.lastChild);
+  }
+}
+
+trigger.addEventListener("click", toggleModal);
+closeButton.addEventListener("click", toggleModal);
+window.addEventListener("click", windowOnClick);
+
 function Book(title, author, pages, read) {
   this.title = title;
   this.author = author;
@@ -22,19 +45,20 @@ function Book(title, author, pages, read) {
   this.read = read;
 }
 
-// TODO: make it a modal
 // Dynamically create a form and ask user for info about the book
 function startBookForm() {
-  const bookForm = document.createElement("form");
+  modal.appendChild(modalContent);
+
+  const bookForm = modalContent.appendChild(document.createElement("form"));
   bookForm.setAttribute("method", "post");
   bookForm.setAttribute("action", "#");
   bookForm.id = "book-form";
 
-  const titleLabel = document.createElement("label");
+  const titleLabel = modalContent.appendChild(document.createElement("label"));
   titleLabel.setAttribute("for", "book_title");
   titleLabel.textContent = "TITLE";
 
-  const bookTitle = document.createElement("input");
+  const bookTitle = modalContent.appendChild(document.createElement("input"));
   bookTitle.setAttribute("type", "text");
   bookTitle.setAttribute("name", "book_title");
   bookTitle.id = "book_title";
@@ -43,11 +67,11 @@ function startBookForm() {
   bookForm.appendChild(titleLabel);
   bookForm.appendChild(bookTitle);
 
-  const authorLabel = document.createElement("label");
+  const authorLabel = modalContent.appendChild(document.createElement("label"));
   authorLabel.setAttribute("for", "book_author");
   authorLabel.textContent = "AUTHOR";
 
-  const bookAuthor = document.createElement("input");
+  const bookAuthor = modalContent.appendChild(document.createElement("input"));
   bookAuthor.setAttribute("type", "text");
   bookAuthor.setAttribute("name", "book_author");
   bookAuthor.id = "book_author";
@@ -56,11 +80,11 @@ function startBookForm() {
   bookForm.appendChild(authorLabel);
   bookForm.appendChild(bookAuthor);
 
-  const pagesLabel = document.createElement("label");
+  const pagesLabel = modalContent.appendChild(document.createElement("label"));
   pagesLabel.setAttribute("for", "book_pages");
   pagesLabel.textContent = "PAGES";
 
-  const bookPages = document.createElement("input");
+  const bookPages = modalContent.appendChild(document.createElement("input"));
   bookPages.setAttribute("type", "number");
   bookPages.setAttribute("name", "book_pages");
   bookPages.setAttribute("min", "1");
@@ -70,20 +94,27 @@ function startBookForm() {
   bookForm.appendChild(pagesLabel);
   bookForm.appendChild(bookPages);
 
-  const readLabel = document.createElement("label");
+  const readContainer = modalContent.appendChild(document.createElement("div"));
+  readContainer.className = "checkbox-container";
+
+  bookForm.appendChild(readContainer);
+
+  const readLabel = readContainer.appendChild(document.createElement("label"));
   readLabel.setAttribute("for", "book_read");
   readLabel.textContent = "READ";
 
-  const bookRead = document.createElement("input");
+  const bookRead = readContainer.appendChild(document.createElement("input"));
   bookRead.setAttribute("type", "checkbox");
   bookRead.setAttribute("name", "book_read");
   bookRead.id = "book_read";
   bookRead.setAttribute("required", "");
 
-  bookForm.appendChild(readLabel);
-  bookForm.appendChild(bookRead);
+  readContainer.appendChild(readLabel);
+  readContainer.appendChild(bookRead);
 
-  const submitButton = document.createElement("button");
+  const submitButton = modalContent.appendChild(
+    document.createElement("button")
+  );
   submitButton.textContent = "SUBMIT";
   submitButton.setAttribute("type", "button");
   submitButton.setAttribute("form", "book-form");
@@ -94,7 +125,7 @@ function startBookForm() {
   bookForm.appendChild(submitButton);
 
   const libraryContainer = document.querySelector(".wrapper");
-  libraryContainer.appendChild(bookForm);
+  libraryContainer.appendChild(modal);
 
   // Pass form info to addBookToLibrary
   submitButton.addEventListener("click", () => {
