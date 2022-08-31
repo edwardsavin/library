@@ -1,19 +1,35 @@
-const theHobbit = new Book(
+const bookTheHobbit = new Book(
   "The Hobbit",
   "J.R.R. Tolkien",
   "295",
   "not read yet"
 );
 
-const markusGiant = new Book("Markus Giant", "Bogdan Aiuriios", "1442", "read");
+const bookFoundation = new Book("Foundation", "Isaac Asimov", "255", "read");
 
-const goGame = new Book("Go Game", "Iuriona Jixiun", "44", "read");
+const bookHarryPotter1 = new Book(
+  "Harry Potter and the Philosopher's Stone",
+  "J. K. Rowling",
+  "223",
+  "read"
+);
 
-const goGame2 = new Book("Go Game 2", "Iuriona Jixiun", "44", "read");
+const bookGreatGatsby = new Book(
+  "The Great Gatsby",
+  "F. Scott Fitzgerald",
+  "208",
+  "read"
+);
 
-const goGame3 = new Book("Go Game 3", "Iuriona Jixiun", "44", "read");
+const bookGoGame3 = new Book("Brave New World", "Aldous Huxley", "311", "read");
 
-let myLibrary = [theHobbit, markusGiant, goGame, goGame2, goGame3];
+let myLibrary = [
+  bookTheHobbit,
+  bookFoundation,
+  bookHarryPotter1,
+  bookGreatGatsby,
+  bookGoGame3,
+];
 
 // Modal
 const modal = document.querySelector(".modal");
@@ -250,15 +266,38 @@ function displayBooks() {
   findButtons();
 }
 
-// TODO: solve bug: not removing the book when clicking exactly on it "X" icon
 // Check if any button inside HTML book element is clicked
 function findButtons() {
   // Send book location from myLibrary to removeBook() if remove button is clicked
   document.onclick = (e) => {
-    if (e.target.parentNode.className.includes("book-remove")) {
+    // Path
+    if (
+      e.target.parentNode.parentNode.parentNode.className.includes(
+        "book-remove"
+      )
+    ) {
+      removeBook(
+        e.target.parentNode.parentNode.parentNode.parentNode.dataset.location
+      );
+    }
+
+    // Svg
+    else if (e.target.parentNode.parentNode.className.includes("book-remove")) {
+      removeBook(e.target.parentNode.parentNode.parentNode.dataset.location);
+    }
+
+    // Icon or text
+    else if (e.target.parentNode.className.includes("book-remove")) {
       removeBook(e.target.parentNode.parentNode.dataset.location);
-      // Send book location from myLibrary to changeReadStatus() if read button is clicked
-    } else if (e.target.className.includes("read-status")) {
+    }
+
+    // Main button
+    else if (e.target.className.includes("book-remove")) {
+      removeBook(e.target.parentNode.dataset.location);
+    }
+
+    // Send book location from myLibrary to changeReadStatus() if read button is clicked
+    else if (e.target.className.includes("read-status")) {
       changeReadStatus(e.target.parentNode.parentNode.dataset.location);
     }
   };
