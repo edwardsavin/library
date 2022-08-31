@@ -64,7 +64,6 @@ body {
   text-rendering: optimizeSpeed;
   line-height: 1.5;
   background-color: var(--clr-neutral-100);
-  padding: 2rem;
 }
 
 /* A elements that don't have a class get default styles */
@@ -130,6 +129,35 @@ svg {
 
 .read-status {
   margin-top: 3rem;
+}
+
+.header {
+  height: 5.4rem;
+  background-color: var(--clr-neutral-400);
+  margin-bottom: 4rem;
+  display: flex;
+  align-items: center;
+  font-size: var(--fs-700);
+  font-weight: var(--fw-bold);
+  color: var(--clr-primary-400);
+  padding-inline-start: 6rem;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+  text-shadow: 0 0.5px 2.4px hsla(210, 20%, 98%, 0.651),
+    -0.5px 1px 2.4px hsla(210, 20%, 98%, 0.397),
+    -1px 3px 2.4px hsla(210, 10%, 23%, 0.205);
+}
+
+.footer {
+  display: flex;
+  justify-content: center;
+  margin-top: 4rem;
+  color: var(--clr-primary-400);
+  font-size: var(--fs-400);
+}
+
+.footer > p > a {
+  color: var(--clr-accent-400);
+  font-weight: var(--fw-bold);
 }
 
 /* New book button */
