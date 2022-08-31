@@ -368,9 +368,31 @@ input:checked + .slider:before {
   flex-direction: column;
   gap: 0.1rem;
   padding: 2rem;
-  font-weight: var(--fw-regular);
+  font-weight: var(--fw-bold);
   font-size: var(--fs-400);
   color: var(--clr-accent-400);
+  text-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
+}
+
+#book-submit {
+  font-weight: var(--fw-regular);
+  color: var(--clr-accent-400);
+  background-color: var(--clr-neutral-400);
+  border: solid 0.2px var(--clr-accent-400);
+  height: 3rem;
+  cursor: pointer;
+}
+
+#book-submit:hover {
+  background-color: hsla(210, 10%, 23%, 0.158);
+  text-decoration: none;
+  transition-duration: 0.1s;
+}
+
+#book-submit:active {
+  background-color: hsla(210, 10%, 23%, 0.24);
+  box-shadow: hsla(210, 17%, 93%, 0.281) 0 1px 0 inset;
+  transition: none 0s;
 }
 
 .checkbox-container {

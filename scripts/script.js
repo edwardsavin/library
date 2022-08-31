@@ -72,7 +72,7 @@ function startBookForm() {
 
   const titleLabel = modalContent.appendChild(document.createElement("label"));
   titleLabel.setAttribute("for", "book_title");
-  titleLabel.textContent = "TITLE";
+  titleLabel.textContent = "Title";
 
   const bookTitle = modalContent.appendChild(document.createElement("input"));
   bookTitle.setAttribute("type", "text");
@@ -85,7 +85,7 @@ function startBookForm() {
 
   const authorLabel = modalContent.appendChild(document.createElement("label"));
   authorLabel.setAttribute("for", "book_author");
-  authorLabel.textContent = "AUTHOR";
+  authorLabel.textContent = "Author";
 
   const bookAuthor = modalContent.appendChild(document.createElement("input"));
   bookAuthor.setAttribute("type", "text");
@@ -98,7 +98,7 @@ function startBookForm() {
 
   const pagesLabel = modalContent.appendChild(document.createElement("label"));
   pagesLabel.setAttribute("for", "book_pages");
-  pagesLabel.textContent = "PAGES";
+  pagesLabel.textContent = "Pages";
 
   const bookPages = modalContent.appendChild(document.createElement("input"));
   bookPages.setAttribute("type", "number");
@@ -117,7 +117,7 @@ function startBookForm() {
 
   const readLabel = readContainer.appendChild(document.createElement("label"));
   readLabel.setAttribute("for", "book_read");
-  readLabel.textContent = "READ";
+  readLabel.textContent = "Read";
 
   const bookRead = readContainer.appendChild(document.createElement("input"));
   bookRead.setAttribute("type", "checkbox");
