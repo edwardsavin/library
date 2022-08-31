@@ -160,7 +160,7 @@ function startBookForm() {
       );
     }
 
-    libraryContainer.removeChild(bookForm);
+    libraryContainer.removeChild(modal);
   });
 }
 
