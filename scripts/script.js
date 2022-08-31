@@ -160,7 +160,8 @@ function startBookForm() {
       );
     }
 
-    libraryContainer.removeChild(modal);
+    modalContent.removeChild(modalContent.lastChild);
+    toggleModal();
   });
 }
 
