@@ -165,10 +165,10 @@ function startBookForm() {
         bookPages.value,
         bookRead.value
       );
-    }
 
-    modalContent.removeChild(modalContent.lastChild);
-    toggleModal();
+      modalContent.removeChild(modalContent.lastChild);
+      toggleModal();
+    }
   });
 }
 
@@ -350,6 +350,7 @@ function updateBookLocation() {
   });
 }
 
+// Check if book title or author has been filled
 // Check if book already exists in myLibrary
 function checkDuplicate(title, author) {
   let checkTitle = myLibrary.some(function (book) {
@@ -360,10 +361,20 @@ function checkDuplicate(title, author) {
     return book.author.toLowerCase() === author.toLowerCase();
   });
 
-  if (checkTitle && checkAuthor) {
+  if (title === "") {
+    alert("Book title is required");
+    return true;
+  } else if (author === "") {
+    alert("Book author is required");
     return true;
   } else {
-    return false;
+    if (checkTitle && checkAuthor) {
+      console.log(checkAuthor);
+      alert("This book already exists in your library");
+      return true;
+    } else {
+      return false;
+    }
   }
 }
 
