@@ -54,6 +54,15 @@ trigger.addEventListener("click", toggleModal);
 closeButton.addEventListener("click", toggleModal);
 window.addEventListener("click", windowOnClick);
 
+document.addEventListener("keypress", function (e) {
+  if (modal.className.includes("modal-show")) {
+    if (e.key === "Enter") {
+      document.getElementById("book-submit").click();
+    }
+  }
+});
+
+// Book constructor
 function Book(title, author, pages, read) {
   this.title = title;
   this.author = author;
@@ -105,7 +114,6 @@ function startBookForm() {
   bookPages.setAttribute("name", "book_pages");
   bookPages.setAttribute("min", "1");
   bookPages.id = "book_pages";
-  bookPages.setAttribute("required", "");
 
   bookForm.appendChild(pagesLabel);
   bookForm.appendChild(bookPages);
@@ -123,7 +131,6 @@ function startBookForm() {
   bookRead.setAttribute("type", "checkbox");
   bookRead.setAttribute("name", "book_read");
   bookRead.id = "book_read";
-  bookRead.setAttribute("required", "");
 
   readContainer.appendChild(readLabel);
   readContainer.appendChild(bookRead);
