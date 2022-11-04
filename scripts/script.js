@@ -1,3 +1,13 @@
+// Book constructor
+class Book {
+  constructor(title, author, pages, read) {
+    this.title = title;
+    this.author = author;
+    this.pages = pages;
+    this.read = read;
+  }
+}
+
 const bookTheHobbit = new Book(
   "The Hobbit",
   "J.R.R. Tolkien",
@@ -61,14 +71,6 @@ document.addEventListener("keypress", function (e) {
     }
   }
 });
-
-// Book constructor
-function Book(title, author, pages, read) {
-  this.title = title;
-  this.author = author;
-  this.pages = pages;
-  this.read = read;
-}
 
 // Dynamically create a form and ask user for info about the book
 function startBookForm() {
